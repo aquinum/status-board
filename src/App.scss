@@ -1,0 +1,30 @@
+$grid-width: 18;
+$grid-height: 12;
+
+.App {
+  width: 1920px;
+  height: 1080px;
+  padding: 30px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat($grid-width, 1fr);
+  grid-template-rows: repeat($grid-height, 1fr);
+}
+
+@for $i from 1 through $grid-width {
+  .cs-#{$i} {
+    grid-column-start: $i;
+  }
+  .w-#{$i} {
+    grid-column-end: span $i;
+  }
+}
+
+@for $i from 1 through $grid-height {
+  .rs-#{$i} {
+    grid-column-start: $i;
+  }
+  .h-#{$i} {
+    grid-row-end: span $i;
+  }
+}
