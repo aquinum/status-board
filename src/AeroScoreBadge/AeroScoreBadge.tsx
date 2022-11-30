@@ -1,3 +1,4 @@
+import { TileDefaultProps } from '../Tile';
 import './AeroScoreBadge.css'
 
 export enum AeroScore {
@@ -10,17 +11,15 @@ export enum AeroScore {
 
 type Props = {
     aeroScore: AeroScore
-    height: number;
-    width: number;
-}
+} & TileDefaultProps;
 
-const AeroScoreBadge = ({ aeroScore, height, width }: Props) => {
-    return <div className={`AeroScoreWrapper h-${height} w-${width}`}>
+const AeroScoreBadge = ({ aeroScore, height, width, x, y }: Props) => {
+    return <div className={`AeroScoreWrapper h-${height} w-${width} x-${x} y-${y}`}>
         <h1>Aéro-Score</h1>
         <div className='subtitle'>Quelle est la qualité du renouvellement d’air du Node ?</div>
 
         <div className={'Table'}>
-            <div className={'Line Disabled'}>
+            <div className={`Line ${aeroScore !== AeroScore.A && 'Disabled'}`}>
                 <div className={'Letter LetterA'}>A</div>
                 <div className={'Description'}>
                     <h2>Excellent</h2>
@@ -28,7 +27,7 @@ const AeroScoreBadge = ({ aeroScore, height, width }: Props) => {
                 </div>
                 <div>image</div>
             </div>
-            <div className={'Line'}>
+            <div className={`Line ${aeroScore !== AeroScore.B && 'Disabled'}`}>
                 <div className={'Letter LetterB'}>B</div>
                 <div className={'Description'}>
                     <h2>Bon</h2>
@@ -36,7 +35,7 @@ const AeroScoreBadge = ({ aeroScore, height, width }: Props) => {
                 </div>
                 <div>image</div>
             </div>
-            <div className={'Line'}>
+            <div className={`Line ${aeroScore !== AeroScore.C && 'Disabled'}`}>
                 <div className={'Letter LetterC'}>C</div>
                 <div className={'Description'}>
                     <h2>Moyen</h2>
@@ -44,7 +43,7 @@ const AeroScoreBadge = ({ aeroScore, height, width }: Props) => {
                 </div>
                 <div>image</div>
             </div>
-            <div className={'Line'}>
+            <div className={`Line ${aeroScore !== AeroScore.D && 'Disabled'}`}>
                 <div className={'Letter LetterD'}>D</div>
                 <div className={'Description'}>
                     <h2>Médiocre</h2>
@@ -52,7 +51,7 @@ const AeroScoreBadge = ({ aeroScore, height, width }: Props) => {
                 </div>
                 <div>image</div>
             </div>
-            <div className={'Line'}>
+            <div className={`Line ${aeroScore !== AeroScore.E && 'Disabled'}`}>
                 <div className={'Letter LetterE'}>E</div>
                 <div className={'Description'}>
                     <h2>Insuffisant</h2>
