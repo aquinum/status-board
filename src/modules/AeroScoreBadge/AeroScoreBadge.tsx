@@ -1,4 +1,6 @@
-import { TileDefaultProps } from '../Tile';
+import { useEffect, useState } from 'react';
+import api from '../../api/api';
+import { TileDefaultProps } from '../../Tile';
 import './AeroScoreBadge.css'
 
 export enum AeroScore {
@@ -10,10 +12,34 @@ export enum AeroScore {
 }
 
 type Props = {
-    aeroScore: AeroScore
 } & TileDefaultProps;
 
-const AeroScoreBadge = ({ aeroScore, height, width, x, y }: Props) => {
+const AeroScoreBadge = ({ height, width, x, y }: Props) => {
+    const [aeroScore, setAeroScore] = useState<AeroScore>();
+
+    const loadData = () => {
+        console.debug('Loading Aeroscore data');
+        api.get('/api/netatmo').then(response => {
+            const co2Level = response.data.datas[0].data.co2;
+            if (co2Level < 600) {
+                setAeroScore(AeroScore.A);
+            } else if (co2Level >= 600 && co2Level < 800) {
+                setAeroScore(AeroScore.B);
+            } else if (co2Level >= 800 && co2Level < 1000) {
+                setAeroScore(AeroScore.C);
+            } else if (co2Level >= 1000 && co2Level < 1500) {
+                setAeroScore(AeroScore.D);
+            } else {
+                setAeroScore(AeroScore.E);
+            }
+        });
+        setTimeout(loadData, 60 * 1000);
+    }
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
     return <div className={`AeroScoreWrapper h-${height} w-${width} x-${x} y-${y}`}>
         <h1>Aéro-Score</h1>
         <div className='subtitle'>Quelle est la qualité du renouvellement d’air du Node ?</div>

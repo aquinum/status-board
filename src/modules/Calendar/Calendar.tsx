@@ -1,4 +1,4 @@
-import { TileDefaultProps } from "../Tile";
+import { TileDefaultProps } from "../../Tile";
 
 type CalendarProps = {
 } & TileDefaultProps;
